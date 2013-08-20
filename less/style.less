@@ -63,6 +63,10 @@ input {
 	color: @list;
 	margin: 20px auto;
 
+  @media screen and (max-width: 800px) {
+    width: 98%;
+  }
+
   #header {
   	padding: 8px 5px;
   	font-weight: bold;
@@ -92,6 +96,10 @@ input {
 		max-width: -webkit-calc(~"100% - 200px");
 		max-width:    -moz-calc(~"100% - 200px");
 		max-width:         calc(~"100% - 200px");
+
+    @media screen and (max-width: 480px) {
+      overflow: visible;
+    }
 	}
 
   .modtime, .size { 
@@ -99,7 +107,17 @@ input {
   	width: 100px; 
   	display: inline-block; 
   	text-align: center;
+
+    @media screen and (max-width: 400px) {
+      display:none;
+    }
   }
+  
+  .modtime {
+    @media screen and (max-width: 480px) {
+      display:none;
+    }
+  } 
 }
 
 .error_msg {
