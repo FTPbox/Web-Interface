@@ -12,18 +12,25 @@
 	$viewMode = ViewMode::Setup;
 	$status = ErrorType::None;
 
-	$session = new Session($config);
+	$session = new Session();
+
+	$current_path = null;
 
 	function Load()
 	{
-		global $config, $viewMode, $status;
+		global $config, $viewMode, $status, $current_path;
 		if (file_exists(PATH_TO_CONFIG))
 			$config = include PATH_TO_CONFIG;
 
-		$session = new Session($config);
+		$session = new Session();
 
 		$viewMode = getViewMode();
 		$status = getStatus();
+
+		if (!empty($_REQUEST['d']))
+			$current_path = $_REQUEST['d'];
+		else
+			$current_path = $config['root'];
 	}
 
 	function getViewMode()
@@ -109,6 +116,19 @@
 		return $_REQUEST['password'] === $_REQUEST['repeat_password'];
 	}
 
+	function formatUrl($fpath)
+	{
+		global $config;
+		$root = realpath($config['root']);
+		if (0 !== strpos($fpath, $root)) return $fpath;
+
+		$fpath_a = explode (DIRECTORY_SEPARATOR, $fpath);
+		$root_a = explode (DIRECTORY_SEPARATOR, $root);
+		$url_a = array_splice ($fpath_a, count($root_a));
+
+		return implode(DIRECTORY_SEPARATOR, $url_a);
+	}
+
 	function formatSize($size)
 	{		
 		if (!$size)
@@ -132,11 +152,8 @@
 
 	class Session 
 	{
-		protected $config = array();
-
-		public function __construct($config)
-		{
-			$this->config = $config;
+		public function __construct()
+		{			
 			session_start();
 		}
 

@@ -5,7 +5,18 @@
 
 		public function __construct($directory)
 		{
-			$this->directory = @realpath($directory) or die ("Access denied!");
+			global $config;
+
+			if ($directory !== $config['root'])
+				$directory = $config['root'] . '/' . $directory;
+
+			$directory = @realpath($directory) or die ("Access denied!");
+			$root = @realpath($config['root']) or die ("Access denied!");
+			
+			if (0 !== strpos($directory, $root))
+				$directory = $root;
+
+			$this->directory = $directory;
 		}
 
 		public function getList($dir = NULL)
@@ -22,7 +33,8 @@
 		        	'name'     => $entry,
 		        	'fpath'    => $fpath,
 		        	'size'	   => $this->size($fpath),
-		        	'mtime'	   => $this->modtime($fpath)
+		        	'mtime'	   => $this->modtime($fpath),
+		        	'isdir'	   => $this->isDirectory($fpath)
 	        		);
 		    }
 		    closedir($handle);

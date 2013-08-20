@@ -21,7 +21,7 @@
 		}
 		else if ($viewMode === ViewMode::Browse)
 		{
-			$fs = new FileSystem($config['root']);
+			$fs = new FileSystem($current_path);
 			include ('includes/list.php');
 		}
 

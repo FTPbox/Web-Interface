@@ -7,9 +7,15 @@
 
 	<ul>
 	<?php foreach ($fs->getList() as $item): ?>
+		<?php 
+			$url = $item['isdir'] ? "?d=" : "?f=";
+			$url .= formatUrl($item['fpath']);
+		?>
 		<li>
 			<div class='name'>
-				<?php echo $item['name']; ?>
+				<a href="<?php echo $url; ?>">
+					<?php echo $item['name']; ?>
+				</a>
 			</div>
 			<div class='modtime'>
 				<?php echo formatModtime($item['mtime']); ?>
