@@ -70,12 +70,7 @@ input {
   #header {
   	padding: 8px 5px;
   	font-weight: bold;
-
-  	background: -webkit-linear-gradient(top, #f5f5f5, #e9e9e9);
-	  background:    -moz-linear-gradient(top, #f5f5f5, #e9e9e9);
-	  background:     -ms-linear-gradient(top, #f5f5f5, #e9e9e9);	 
-	  background:      -o-linear-gradient(top, #f5f5f5, #e9e9e9);
-	  background:         linear-gradient(top, #f5f5f5, #e9e9e9);
+    .linear-bg();
   }
  
   li {
@@ -120,9 +115,46 @@ input {
   } 
 }
 
+#file_preview {
+
+  border: 1px solid #B0B0B0;  
+  width: 100%;
+  background: @list_bg;
+  clear: both;
+  color: @list;
+  margin: 20px auto;
+
+  #header {
+    padding: 10px;
+    .linear-bg();
+    border-bottom: 1px solid @list_border;
+
+    .lines, .filesize { 
+      float: right;
+      display: inline-block; 
+      text-align: center;
+    }
+    .lines { margin-right:5px; padding-right:5px; border-right: 1px solid @list; }
+  }
+
+  #file_contents{
+    padding:15px;
+    img { display:block; margin:15px auto; max-width: 98%; }
+  }
+}
+
 .error_msg {
   color: @accent;
   text-align:center;
   display:block;
   margin: 20px;
+}
+
+.linear-bg(@color1: #f5f5f5, @color2: #e9e9e9)
+{
+  background: -webkit-linear-gradient(top, @color1, @color2);
+  background:    -moz-linear-gradient(top, @color1, @color2);
+  background:     -ms-linear-gradient(top, @color1, @color2);  
+  background:      -o-linear-gradient(top, @color1, @color2);
+  background:         linear-gradient(top, @color1, @color2);
 }

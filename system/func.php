@@ -13,31 +13,40 @@
 	$status = ErrorType::None;
 
 	$session = new Session();
+	$fs = null;
 
 	$current_path = null;
+	$file_path = !empty($_REQUEST['f']) ? $_REQUEST['f'] : null;
 
 	function Load()
 	{
-		global $config, $viewMode, $status, $current_path;
+		global $config, $viewMode, $status, $current_path, $fs;
 		if (file_exists(PATH_TO_CONFIG))
 			$config = include PATH_TO_CONFIG;
 
 		$session = new Session();
 
-		$viewMode = getViewMode();
-		$status = getStatus();
-
 		if (!empty($_REQUEST['d']))
 			$current_path = $_REQUEST['d'];
 		else
 			$current_path = $config['root'];
+
+		$viewMode = getViewMode();
+		$status = getStatus();
+
+		if ($viewMode == ViewMode::Browse 
+		 || $viewMode == ViewMode::SingleFile)
+			$fs = new FileSystem($current_path);
 	}
 
 	function getViewMode()
 	{
-		global $config, $session;
+		global $config, $session, $file_path;
 		if ( $session->alreadySet() && isConfigSet() ) {
 			// settings mode?
+
+			if (!is_null($file_path))
+				return viewmode::SingleFile;
 
 			return ViewMode::Browse;
 		} 
@@ -116,6 +125,53 @@
 		return $_REQUEST['password'] === $_REQUEST['repeat_password'];
 	}
 
+	function fileData($path)
+	{
+		global $current_path, $fs, $config;
+		$path = $current_path . DIRECTORY_SEPARATOR . $path;
+
+		if ($fs->isImage($path))
+		{
+			$type = pathinfo($path, PATHINFO_EXTENSION);
+			$data = $fs->read ($path);
+			$base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+			return array(
+				'content'	=> '<img src="'. $base64 .'"/>',
+				'size'		=> $fs->size($path),
+				'type'		=> 'image'
+			);
+		}
+		if ($fs->isText($path))
+		{
+			$file = fopen($path, 'r');
+			$lines = 0;
+
+			if ($file) {
+				$c = "";
+				while (!feof($file)) {
+					$filen = fgets($file, 4096);
+					$c .= htmlspecialchars($filen) . "<br />";
+					$lines++;
+				}
+				fclose($file);
+
+				return array(
+					'content'	=> $c,
+					'size'		=> $fs->size($path),
+					'lines'		=> $lines,
+					'type'		=> 'text'
+				);
+			}
+		}
+		
+		return array(
+			'content'	=> 'cannot display file contents.',
+			'size'		=> $fs->size($path),
+			'type'		=> 'other'
+		);
+	}
+
 	function formatUrl($fpath)
 	{
 		global $config;
@@ -190,6 +246,7 @@
 		const Login = 1;
 		const Browse = 2;
 		const Settings = 3;
+		const SingleFile = 4;
 	}
 
 	class ErrorType{

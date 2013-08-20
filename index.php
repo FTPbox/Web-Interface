@@ -21,8 +21,11 @@
 		}
 		else if ($viewMode === ViewMode::Browse)
 		{
-			$fs = new FileSystem($current_path);
 			include ('includes/list.php');
+		}
+		else if ($viewMode === ViewMode::SingleFile)
+		{
+			include ('includes/file.php');
 		}
 
 	?>

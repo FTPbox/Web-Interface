@@ -8,7 +8,7 @@
 			global $config;
 
 			if ($directory !== $config['root'])
-				$directory = $config['root'] . '/' . $directory;
+				$directory = $config['root'] . DIRECTORY_SEPARATOR . $directory;
 
 			$directory = @realpath($directory) or die ("Access denied!");
 			$root = @realpath($config['root']) or die ("Access denied!");
@@ -57,7 +57,7 @@
 
 		public function read($item)
 		{
-			return file_get_contents($item);
+			return file_get_contents ($item);
 		}
 
 		public function exists($item)
@@ -78,6 +78,20 @@
 		public function isDirectory($item)
 		{
 			return (bool) is_dir($item);
+		}
+
+		public function isImage($item)
+		{
+			$s = getimagesize($item);
+		    $type = $s[2];
+		     
+		    return in_array($type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP));
+		}
+
+		public function isText($item)
+		{			
+			$mime = mime_content_type($item);			
+			return FALSE !== strpos($mime, 'text');
 		}
 
 		public function canRead($item)
