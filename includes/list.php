@@ -11,7 +11,7 @@
 			$url = $item['isdir'] ? "?d=" : "?f=";
 			$url .= formatUrl($item['fpath']);
 		?>
-		<li>
+		<li data-name="<?php echo $item['name']; ?>" data-time="<?php echo $item['mtime']; ?>" data-size="<?php echo $item['size']; ?>">
 			<div class='name'>
 				<a href="<?php echo $url; ?>">
 					<?php echo $item['name']; ?>

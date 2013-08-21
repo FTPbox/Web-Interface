@@ -7,6 +7,8 @@
 	<head>
 		<link rel="stylesheet/less" type="text/css" href="less/style.less" />
 		<script src="js/less-1.4.1.min.js" type="text/javascript"></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+		<script src="js/index.js" type="text/javascript"></script>
 	</head>
 	<body>
 	<?php
@@ -29,5 +31,5 @@
 		}
 
 	?>
-	</body>
+	</body>	
 </html>

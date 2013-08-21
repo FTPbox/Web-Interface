@@ -70,7 +70,12 @@ input {
   #header {
   	padding: 8px 5px;
   	font-weight: bold;
+    font-size: 14px;
+    
     .linear-bg();
+
+    .asc:after  { .arrow (true);  }
+    .desc:after { .arrow (false); }
   }
  
   li {
@@ -158,3 +163,19 @@ input {
   background:      -o-linear-gradient(top, @color1, @color2);
   background:         linear-gradient(top, @color1, @color2);
 }
+
+.arrow (@up: true) {
+  width:  0;
+  height: 0;
+
+  margin-top: -7px;
+  margin-left: 4px;
+  border-left:  3px solid transparent;
+  border-right: 3px solid transparent;
+  .arrow_point(@up);
+  display:inline-block;
+  content: ' ';
+}
+
+.arrow_point (@d) when (@d = true)  { border-bottom: 6px solid @list; }
+.arrow_point (@d) when (@d = false) { border-top:  6px solid @list; }
