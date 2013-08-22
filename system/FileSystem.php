@@ -19,6 +19,12 @@
 			$this->directory = $directory;
 		}
 
+		/**
+		 * returns an array of all items in the give path and details for each one (name, full path etc)
+		 * if no path is specified, $directory will be used.
+		 * @param  string $dir
+		 * @return array
+		 */
 		public function getList($dir = NULL)
 		{
 			if (is_null($dir)) $dir = $this->directory;

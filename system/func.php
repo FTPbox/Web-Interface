@@ -18,6 +18,9 @@
 	$current_path = null;
 	$file_path = !empty($_REQUEST['f']) ? $_REQUEST['f'] : null;
 
+	/**
+	 * Load the configuration, current view mode, status etc.
+	 */
 	function Load()
 	{
 		global $config, $viewMode, $status, $current_path, $fs;
@@ -39,6 +42,11 @@
 			$fs = new FileSystem($current_path);
 	}
 
+	/**
+	 * Returns the current view mode
+	 * (the page that should be displayed)
+	 * @return ViewMode
+	 */
 	function getViewMode()
 	{
 		global $config, $session, $file_path;
@@ -46,7 +54,7 @@
 			// settings mode?
 
 			if (!is_null($file_path))
-				return viewmode::SingleFile;
+				return ViewMode::SingleFile;
 
 			return ViewMode::Browse;
 		} 
@@ -70,6 +78,10 @@
 		return viewmode::Setup;
 	}
 
+	/**
+	 * Returns the error type, if any, to be displayed to the user.
+	 * @return ErrorType
+	 */
 	function getStatus()
 	{
 		if ( !isset($_REQUEST['username']) && !isset($_REQUEST['password']) )
@@ -84,6 +96,10 @@
 		return ErrorType::None;
 	}
 
+	/**
+	 * Save $config to the configuration file.
+	 * @return mixed
+	 */
 	function saveConfig()
 	{
 		if(!is_writable(dirname (PATH_TO_CONFIG) ))
@@ -93,15 +109,23 @@
 		$data = '<?php if(!defined("Access")) die("You cannot view this file"); ';
 		$data .= 'return ' . var_export($config, true) . '; ?>';
 
-		file_put_contents(PATH_TO_CONFIG, $data);
+		return file_put_contents(PATH_TO_CONFIG, $data);
 	}
 
+	/**
+	 * Returns true if the configuration has already been set.
+	 * @return boolean
+	 */
 	function isConfigSet()
 	{
 		global $config;
 		return !empty($config['username']) || !empty($config['password']);
 	}
 
+	/**
+	 * Returns true if a valid login request is made.
+	 * @return Boolean
+	 */
 	function validLogin()
 	{
 		if ( empty($_REQUEST)
@@ -115,6 +139,10 @@
 			&& sha1($_REQUEST['password']) === $config['password'];
 	}
 
+	/**
+	 * Returns true if a valid setup request is made.
+	 * @return Boolean
+	 */
 	function validSetup()
 	{
 		if ( empty($_REQUEST['username']) 
@@ -125,9 +153,15 @@
 		return $_REQUEST['password'] === $_REQUEST['repeat_password'];
 	}
 
+	/**
+	 * Returns an array of details for the given path (inc. content, size, type, line count)
+	 * Currently only works for images and text files.
+	 * @param  [type] $path
+	 * @return [type]
+	 */
 	function fileData($path)
 	{
-		global $current_path, $fs, $config;
+		global $current_path, $fs;
 		$path = $current_path . DIRECTORY_SEPARATOR . $path;
 
 		if ($fs->isImage($path))
@@ -172,6 +206,11 @@
 		);
 	}
 
+	/**
+	 * Returns the relative path to $fpath from the root folder set in $config.
+	 * @param  string $fpath
+	 * @return string
+	 */
 	function formatUrl($fpath)
 	{
 		global $config;
@@ -185,6 +224,11 @@
 		return implode(DIRECTORY_SEPARATOR, $url_a);
 	}
 
+	/**
+	 * Returns a formatted string from the given file length.
+	 * @param  integer $size
+	 * @return string
+	 */
 	function formatSize($size)
 	{		
 		if (!$size)
@@ -198,6 +242,12 @@
 			return round (($size/1024/1024), 1)." MB";
 	}
 
+	/**
+	 * Return date in hour format if the $mtime was within the day,
+	 * or otherwise in day-month-year format.
+	 * @param  integer $mtime
+	 * @return string
+	 */
 	function formatModtime($mtime)
 	{
 		if (time() - $mtime < 60 * 60 * 12)
@@ -213,6 +263,11 @@
 			session_start();
 		}
 
+		/**
+		 * Returns true if the current session's values 
+		 * are set and match the config.
+		 * @return Boolean
+		 */
 		public function alreadySet()
 		{			
 			if ( !isset($_SESSION) 
@@ -227,6 +282,9 @@
 				&& $_SESSION['password'] === $config['password'];
 		}
 
+		/**
+		 * Start a new session, set session sid, username and password
+		 */
 		public function start()
 		{		
 			global $config;
@@ -235,6 +293,9 @@
 			$_SESSION['password'] = $config['password'];
 		}
 
+		/**
+		 * Destroy the current session
+		 */
 		public function destroy()
 		{
 			return session_destory();
