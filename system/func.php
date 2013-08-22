@@ -88,6 +88,10 @@
 			return ErrorType::None;
 		if ( !isset($_REQUEST['username']) || !isset($_REQUEST['password']) )
 			return ErrorType::InvalidInput;
+		if ( !isValidUsername() && isset($_REQUEST['repeat_password']) )
+			return ErrorType::InvalidUsername;
+		if ( !isValidPassword() && isset($_REQUEST['repeat_password']) )
+			return ErrorType::InvalidPassword;
 		if ( isset($_REQUEST['repeat_password']) && $_REQUEST['repeat_password'] !== $_REQUEST['password'] )
 			return ErrorType::PasswordsDontMatch;
 		if ( !validLogin() )
@@ -149,8 +153,30 @@
 		  || empty($_REQUEST['password']) 
 		  || empty($_REQUEST['repeat_password']))
 			return false;
+
+		// Regex-check the sent username-password
+		if ( !isValidUsername() || !isValidPassword() ) 
+			return false;
 			
 		return $_REQUEST['password'] === $_REQUEST['repeat_password'];
+	}
+
+	/**
+	 * Returns true if the username matches our regex.
+	 * @return boolean
+	 */
+	function isValidUsername ()
+	{
+		return preg_match('/^[a-z0-9_-]{4,16}$/i', $_REQUEST['username']);
+	}
+
+	/**
+	 * Returns true if the password matches our regex.
+	 * @return boolean
+	 */
+	function isValidPassword ()
+	{
+		return preg_match('/^[a-z0-9!@#$%-_]{6,18}$/', $_REQUEST['password']);
 	}
 
 	/**
@@ -316,5 +342,7 @@
 		const PasswordsDontMatch = 2;
 		const PathInvalid = 3;
 		const InvalidLogin = 4;
+		const InvalidUsername = 5;
+		const InvalidPassword = 6;
 	}
 ?>

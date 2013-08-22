@@ -18,6 +18,12 @@
 		case ErrorType::PathInvalid:
 			$error_msg = "The given path is invalid.";
 			break;
+		case ErrorType::InvalidUsername:
+			$error_msg = "username can contain letters, numbers, underscores, and hyphens (4-16 characters)";
+			break;
+		case ErrorType::InvalidPassword:
+			$error_msg = "pasword can contain alphanumeric characters or any of !@#$%-_ (6-18 characters)";
+			break;
 	}
 ?>
 <form action="index.php" method="POST" id="config">
