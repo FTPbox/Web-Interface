@@ -1,46 +1,54 @@
 FTPbox Web-Interface
-=============
-
-About
 --------------
 
-This repository contains all the files needed for the Web Interface to work. This is mainly for development purposes. If you want to install the WebUI, head to the options and select to use it, the program will install it automatically!
+#### About
+
+This repository is mainly for development purposes. It is slightly different from the interface uploaded by FTPbox.
 
 
 Development
-=============
-
-To-Do
 --------------
 
-- Open/Show file content inside the UI, no need to use a direct link
-- New icons, maybe Fugue Icons ( http://p.yusukekamiyamane.com )
-- Option to copy a file's direct link to clipboard
-- Fix post_max_size and upload_max_filesize errors when uploading
-- Password should be required to access the settings
-- Optional: if deleting is publicly enabled for a UI that isn't pass-protected
+#### To-Do
 
+- [x] Open/Show file content inside the UI.
+- [ ] Icons.
+- [ ] File editing.
+- [ ] File deleting/renaming.
 
 Installing
-=============
-
-Uploading
 --------------
 
-The uploading process has been automated with the FTPbox program to save you the trouble. If you have troubles or just want to do it manually, here's how:
-You only need to upload all the files to your folder of preference (using an FTP client, etc). If you're using webint.zip from the downloads, you'll have to extract its contents first and then upload them.
+#### Uploading
 
-*If you want the FTPbox program to ignore the WebUI files during synchronization and save some time, put them in a folder named 'webint'.*
+*Using git:*
 
-Setup
---------------
+```
+git clone https://github.com/FTPbox/Web-Interface.git
+```
 
-To setup the WebUI, launch your browser and visit the HTTP path of the folder in which you uploaded the WebUI files. You'll be prompted with a form to password-protect the interface. 
-**It is highly recommend that you use a password to protect your files.**
-Finish this simple form and you're ready to use the WebUI.
+*Download zip and extract:*
 
-Requirements
---------------
+```
+wget https://github.com/FTPbox/Web-Interface/archive/master.zip
+unzip master.zip
+```
+
+*From FTPbox:*
+
+From options, check the 'Use the web interface' box.
+
+#### Setup
+
+- Visit the WebUI's folder in your browser.
+- Fill the setup form with a username & password.
+- That's all.
+
+#### Reset
+
+To reset your configuration options, simply delete `data/config.php`
+
+#### Requirements
 
 The requirements to use the WebUI are:
 
