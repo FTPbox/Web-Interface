@@ -1,3 +1,12 @@
+<?php	
+	$url_back = "?d=" . formatUrl ($fs->parent());
+	$url_home = "?d=";
+?>
+<div id="controls">  
+	<a href="<?php echo $url_back; ?>" data-icon="&#xe010;"></a>  
+	<a href="<?php echo $url_home; ?>" data-icon="&#xe005;"></a>
+</div>
+
 <div id='file_list'>
 	<div id='header'>
 		<span class='name'>Name</span>

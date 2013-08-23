@@ -20,6 +20,26 @@
 		}
 
 		/**
+		 * Returns the absolute path to the parent folder of the given path
+		 * @param string $path when null then current directory will be used		 
+		 * @return string
+		 */
+		public function parent($path = NULL)
+		{
+			global $config;
+
+			if (is_null($path))
+				$path = $config['root'];
+			else 
+				$path = $this->directory . DIRECTORY_SEPARATOR . $path;
+
+			if ($this->directory == realpath($path))
+				return null;
+
+			return dirname ($path);
+		}
+
+		/**
 		 * returns an array of all items in the give path and details for each one (name, full path etc)
 		 * if no path is specified, $directory will be used.
 		 * @param  string $dir

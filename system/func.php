@@ -239,6 +239,8 @@
 	 */
 	function formatUrl($fpath)
 	{
+		if (is_null($fpath)) return $fpath;
+		
 		global $config;
 		$root = realpath($config['root']);
 		if (0 !== strpos($fpath, $root)) return $fpath;
