@@ -21,9 +21,10 @@
 		<?php 
 			$url = $item['isdir'] ? "?d=" : "?f=";
 			$url .= formatUrl($item['fpath']);
+			$icon = $item['isdir'] ? '&#xe013;' : extensionIcon($item['ext']);
 		?>
 		<li data-name="<?php echo $item['name']; ?>" data-time="<?php echo $item['mtime']; ?>" data-size="<?php echo $item['size']; ?>">
-			<div class="icon" data-icon="&#xe019;">
+			<div class="icon" data-icon="<?php echo $icon; ?>">
 			</div>
 			<div class='name'>
 				<a href="<?php echo $url; ?>">

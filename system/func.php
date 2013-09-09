@@ -287,6 +287,35 @@
 			return date('d-m-Y', $mtime);
 	}
 
+	/**
+	 * Returns the hex value of the icon assossiated with the given extension.
+	 * @param  string $ext
+	 * @return string
+	 */
+	function extensionIcon($ext)
+	{
+		$dev = ['c', 'cpp', 'cs', 'h', 'java', 'class', 'lua', 'm', 'pl', 'sh', 'sln', 'js', 'php', 'css', 'htm', 'html', 'asp'];
+		if (in_array($ext, $dev))
+			return "&#xe015;";
+
+		$compressed = ['zip', '7z', 'gz', 'pkg', 'rar', 'zipx', 'deb'];
+		if (in_array($ext, $compressed, haystack))
+			return "&#xe00a;";
+
+		$word = ['doc', 'docx'];
+		if (in_array($ext, $word))
+			return "&#xe008;";
+
+		$excel = ['xls', 'xlsx'];
+		if (in_array($ext, $excel))
+			return "&#xe009;";
+
+		if ($ext == "pdf")
+			return "&#xe007;";
+
+		return '&#xe019;';
+	}
+
 	class Session 
 	{
 		public function __construct()

@@ -60,7 +60,8 @@
 		        	'fpath'    => $fpath,
 		        	'size'	   => $this->size($fpath),
 		        	'mtime'	   => $this->modtime($fpath),
-		        	'isdir'	   => $this->isDirectory($fpath)
+		        	'isdir'	   => $this->isDirectory($fpath),
+		        	'ext'	   => $this->getExtension($fpath)
 	        		);
 		    }
 		    closedir($handle);
@@ -208,6 +209,16 @@
 		public function modtime($item)
 		{
 			return filemtime($item);
+		}
+
+		/**
+		 * Returns the extension of the given item
+		 * @param  string $item
+		 * @return string
+		 */
+		public function getExtension($item)
+		{
+			return pathinfo($item, PATHINFO_EXTENSION);
 		}
 	}
 ?>
