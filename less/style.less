@@ -126,18 +126,23 @@ input {
   color: darken(@input_text, 20%);
   margin: 10px auto 0;
 
+  @media screen and (max-width: 800px) {
+    width: 98%;
+  }
+
   a {
     padding: 6px;
     height:30px;
     cursor: pointer;
     box-sizing: border-box;
-    margin-right: -5px;
+    margin-left: -1px;
+    margin-right: -5px;    
     display: inline-block;
     // border-radius: 2px;
     border: 1px solid @list_border;
     background: #f7f7f7;
 
-    &.system { float:right; margin-right: 0; }
+    &.system { float:right; margin-right: -1px; }
     &:hover { background-color: @accent; color: @accent_focus !important; }
   }  
 }
