@@ -18,16 +18,19 @@
 	$current_path = null;
 	$file_path = !empty($_REQUEST['f']) ? $_REQUEST['f'] : null;
 
+	$logout = isset($_REQUEST['logout']);
+
 	/**
 	 * Load the configuration, current view mode, status etc.
 	 */
 	function Load()
 	{
-		global $config, $viewMode, $status, $current_path, $fs;
+		global $config, $viewMode, $status, $current_path, $fs, $logout, $session;
 		if (file_exists(PATH_TO_CONFIG))
 			$config = include PATH_TO_CONFIG;
-
-		$session = new Session();
+		
+		if ($logout) 
+			$session->destroy();		
 
 		if (!empty($_REQUEST['d']))
 			$current_path = $_REQUEST['d'];
@@ -326,7 +329,7 @@
 		 */
 		public function destroy()
 		{
-			return session_destory();
+			return session_destroy();
 		}
 	}
 

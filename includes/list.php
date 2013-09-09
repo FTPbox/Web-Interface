@@ -5,6 +5,8 @@
 <div id="controls">  
 	<a href="<?php echo $url_back; ?>" data-icon="&#xe010;"></a>  
 	<a href="<?php echo $url_home; ?>" data-icon="&#xe005;"></a>
+
+	<a href="?logout" class="system"   data-icon="&#xe003;"></a>
 </div>
 
 <div id='file_list'>
