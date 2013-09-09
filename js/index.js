@@ -64,4 +64,8 @@ $(document).ready(function() {
 			$(this).addClass('desc');
 		}
 	});
+
+	$('#file_list ul li').click(function() {
+       	$(this).toggleClass("checked");
+    });
 });

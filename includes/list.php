@@ -23,6 +23,8 @@
 			$url .= formatUrl($item['fpath']);
 		?>
 		<li data-name="<?php echo $item['name']; ?>" data-time="<?php echo $item['mtime']; ?>" data-size="<?php echo $item['size']; ?>">
+			<div class="icon" data-icon="&#xe019;">
+			</div>
 			<div class='name'>
 				<a href="<?php echo $url; ?>">
 					<?php echo $item['name']; ?>

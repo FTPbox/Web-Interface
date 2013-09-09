@@ -72,6 +72,8 @@ input {
   	font-weight: bold;
     font-size: 14px;
 
+    .name { margin-left:25px; }
+
     .linear-bg();
 
     .asc:after  { .arrow (true);  }
@@ -86,10 +88,20 @@ input {
     &:nth-child(even) { background: @list_bg2; }
     &:hover { background-color: @accent; color: @accent_focus; }
   }
-    
+  
+  .checked {
+    background-color: @accent !important; 
+    color: @accent_focus !important;
 
-	.name { 
-		margin-left:25px;
+    .icon:before { content: "\e006"; }
+  }
+
+  .icon {
+    display: inline-block;
+    width: 20px;
+  }
+
+	.name {		
 		display: inline-block;
 		overflow: hidden;
 
