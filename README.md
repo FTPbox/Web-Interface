@@ -12,7 +12,7 @@ Development
 #### To-Do
 
 - [x] Open/Show file content inside the UI.
-- [ ] Icons.
+- [x] Icons.
 - [ ] File editing.
 - [ ] File deleting/renaming.
 
